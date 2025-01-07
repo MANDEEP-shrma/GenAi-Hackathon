@@ -18,8 +18,7 @@ export default function Bot() {
     try {
       // API call to backend
       const response = await axios.post('http://localhost:5000/api/bot', { message: prompt });
-    console.log(response);
-      // Add bot response to the chat
+       // Add bot response to the chat
       setMessages((prev) => [
         ...prev,
         { type: 'bot', content: response.data.message || 'Sorry, I couldn’t understand that.' },
@@ -31,9 +30,8 @@ export default function Bot() {
         { type: 'bot', content: 'Sorry, something went wrong. Please try again later.' },
       ]);
     }
-
-    // Clear the input prompt
-    setPrompt('');
+     // Clear the input prompt
+     setPrompt('');
   };
 
   return (

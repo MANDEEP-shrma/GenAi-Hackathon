@@ -17,55 +17,37 @@ const langflowClient = new LangflowClient(
     applicationToken
 );
 
-// Endpoint to handle messages
-app.post('/api/bot', async (req, res) => {
-    const { message } = req.body;
 
+app.post('/api/bot', async (req, res) => {
     const flowIdOrName = '37941ca5-0ed3-4642-873f-5d179bf3244d';
     const langflowId = 'e0b69fd6-af76-4a00-b361-20fd2926e36a';
-
+    const tweaks = {};
+    
     try {
-        const tweaks = {
-            "File-hTUPs": {},
-            "SplitText-XGqiS": {},
-            "AstraDB-B2cmD": {},
-            "Google Generative AI Embeddings-imWFu": {},
-            "ChatInput-r79eh": {},
-            "AstraDB-7tqxC": {},
-            "Google Generative AI Embeddings-RogHS": {},
-            "ParseData-wu78L": {},
-            "GoogleGenerativeAIModel-siFyC": {},
-            "Prompt-VKcxw": {},
-            "ChatOutput-Xl3ZT": {}
-        };
-
         const response = await langflowClient.runFlow(
             flowIdOrName,
             langflowId,
-            message,
-            "chat", // inputType
-            "chat", // outputType
+            req.body.message,
+            "chat",
+            "chat",
             tweaks,
-            false, // stream
-            (data) => console.log("Stream Update:", data), // onUpdate (not used here)
-            (message) => console.log("Stream Closed:", message), // onClose
-            (error) => console.error("Stream Error:", error) // onError
+            false
         );
+        console.log("Langflow Response:", response.outputs[0].outputs[0].artifacts.message);
 
-        if (response && response.outputs) {
-            const flowOutputs = response.outputs[0];
-            const firstComponentOutputs = flowOutputs.outputs[0];
-            const chatbotMessage = firstComponentOutputs.outputs.message.text;
-
+        if (response?.outputs?.length) {
+            const chatbotMessage = response.outputs[0].outputs[0].artifacts.message;
             return res.status(200).json({ message: chatbotMessage });
         } else {
-            return res.status(500).json({ error: "Unexpected response format from Langflow" });
+            return res.status(500).json({ error: "Invalid response format." });
         }
     } catch (error) {
-        console.error("Error:", error.message);
-        return res.status(500).json({ error: error.message });
+        console.error("Error in API Handler:", error.message);
+        res.status(500).json({ error: "Internal server error." });
     }
 });
+
+
 
 // Start server
 app.listen(port, () => {
