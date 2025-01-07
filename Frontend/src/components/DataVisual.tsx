@@ -1,4 +1,3 @@
-import React from 'react';
 import { BarChart, PieChart, TrendingUp } from 'lucide-react';
 
 export default function DataVisual() {
