@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LineChart, Sparkles, Users, TrendingUp, ArrowRight } from 'lucide-react';
 import Bot from './components/Bot';
 import DataVisual from './components/DataVisual';
