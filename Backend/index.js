@@ -33,6 +33,7 @@ app.post('/api/bot', async (req, res) => {
             tweaks,
             false
         );
+        console.log(response);
         console.log("Langflow Response:", response.outputs[0].outputs[0].artifacts.message);
 
         if (response?.outputs?.length) {
