@@ -21,7 +21,7 @@ export default function Bot() {
 
     try {
       // API call to backend
-      const response = await axios.post("http://13.233.157.63:5000/api/bot", {
+      const response = await axios.post("http://43.204.214.203:5000/api/bot", {
         message: prompt,
       });
       // Add bot response to the chat
