@@ -2,13 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const LangflowClient = require("./bot"); // Assuming you exported LangflowClient class from BotApi.js
+require("dotenv").config();
 
 const app = express();
 const port = 5000; // Backend runs on this port
 
 // Middleware
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+  })
+);
 
 app.use(bodyParser.json());
 
@@ -55,5 +60,6 @@ app.post("/api/bot", async (req, res) => {
 
 // Start server
 app.listen(port, () => {
+  console.log(process.env.FRONTEND_URL);
   console.log(`Server running at http://localhost:${port}`);
 });
