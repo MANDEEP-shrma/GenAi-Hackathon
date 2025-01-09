@@ -28,7 +28,7 @@ export default function Bot() {
 
     try {
       // API call to backend
-      const response = await axios.post(`${url}/api/bot`, {
+      const response = await axios.post(`${url}api/bot`, {
         message: prompt,
       });
       // Add bot response to the chat
