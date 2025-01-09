@@ -2,21 +2,46 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const LangflowClient = require("./bot"); // Assuming you exported LangflowClient class from BotApi.js
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
 const port = 5000; // Backend runs on this port
 
 // Middleware
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL,
+//     methods: ["GET", "POST", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: (origin, callback) => {
+      // Allow requests from the specific frontend URL or no origin (e.g., for Postman)
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        "http://localhost:5173",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 app.use(bodyParser.json());
 
+// Serve static files from the frontend's dist folder
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.options("*", cors());
 // Application token and Langflow details
 const applicationToken =
   "AstraCS:eRIbAZUzOhvlDLZlFonaZPav:6363a7849b38dd1d229e9390cc6e7c28377bb23609ab32bc42660a6da4e9d7d2"; // Add your application token here
@@ -25,6 +50,7 @@ const langflowClient = new LangflowClient(
   applicationToken
 );
 
+// Backend API route
 app.post("/api/bot", async (req, res) => {
   const flowIdOrName = "37941ca5-0ed3-4642-873f-5d179bf3244d";
   const langflowId = "e0b69fd6-af76-4a00-b361-20fd2926e36a";
@@ -56,6 +82,11 @@ app.post("/api/bot", async (req, res) => {
     console.error("Error in API Handler:", error.message);
     res.status(500).json({ error: "Internal server error." });
   }
+});
+
+// Catch-all route to serve the frontend
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 // Start server
