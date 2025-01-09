@@ -7,13 +7,8 @@ const app = express();
 const port = 5000; // Backend runs on this port
 
 // Middleware
-const corsOptions = {
-  origin: "https://gen-ai-hackathon-gray.vercel.app/", // Replace with your frontend domain
-  methods: "GET,POST,PUT,DELETE", // Allow necessary methods
-  allowedHeaders: "Content-Type,Authorization", // Allow necessary headers
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(bodyParser.json());
 

@@ -22,7 +22,7 @@ export default function Bot() {
     try {
       // API call to backend
       const response = await axios.post(
-        "ec2-43-204-214-203.ap-south-1.compute.amazonaws.com:5000/api/bot",
+        `${import.meta.env.BACKEND_URL}/api/bot`,
         {
           message: prompt,
         }
