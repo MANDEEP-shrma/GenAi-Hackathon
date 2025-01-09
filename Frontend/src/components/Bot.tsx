@@ -21,9 +21,12 @@ export default function Bot() {
 
     try {
       // API call to backend
-      const response = await axios.post("/api/bot", {
-        message: prompt,
-      });
+      const response = await axios.post(
+        "ec2-43-204-214-203.ap-south-1.compute.amazonaws.com:5000/api/bot",
+        {
+          message: prompt,
+        }
+      );
       // Add bot response to the chat
       setMessages((prev) => [
         ...prev,
