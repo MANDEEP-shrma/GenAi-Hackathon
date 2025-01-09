@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/bot",
+      "destination": "http://43.204.214.203:5000/api/bot"
+    }
+  ]
+}
