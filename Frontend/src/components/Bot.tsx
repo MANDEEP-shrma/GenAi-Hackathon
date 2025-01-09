@@ -28,9 +28,12 @@ export default function Bot() {
 
     try {
       // API call to backend
-      const response = await axios.post(`${url}api/bot`, {
-        message: prompt,
-      });
+      const response = await axios.post(
+        `https://cors-anywhere.herokuapp.com/${url}api/bot`,
+        {
+          message: prompt,
+        }
+      );
       // Add bot response to the chat
       setMessages((prev) => [
         ...prev,
