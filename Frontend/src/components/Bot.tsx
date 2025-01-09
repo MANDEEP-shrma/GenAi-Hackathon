@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function Bot() {
   const [prompt, setPrompt] = useState("");
+  let url = import.meta.env.VITE_BACKEND_URL;
   const [messages, setMessages] = useState([
     {
       type: "bot",
@@ -12,6 +13,12 @@ export default function Bot() {
     },
   ]);
 
+  if (import.meta.env.MODE === "development") {
+    url = "https://localhost:5000";
+  } else {
+    //use .env variables
+    url = import.meta.env.VITE_BACKEND_URL;
+  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!prompt.trim()) return;
@@ -21,12 +28,9 @@ export default function Bot() {
 
     try {
       // API call to backend
-      const response = await axios.post(
-        `${import.meta.env.BACKEND_URL}/api/bot`,
-        {
-          message: prompt,
-        }
-      );
+      const response = await axios.post(`${url}/api/bot`, {
+        message: prompt,
+      });
       // Add bot response to the chat
       setMessages((prev) => [
         ...prev,
