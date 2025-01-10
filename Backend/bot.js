@@ -138,7 +138,8 @@ async function main(
 ) {
   const flowIdOrName = "37941ca5-0ed3-4642-873f-5d179bf3244d";
   const langflowId = "e0b69fd6-af76-4a00-b361-20fd2926e36a";
-  const applicationToken = process.env.APPLICATION_URL;
+  const applicationToken =
+    "AstraCS:kXzZWKBZulxIEMxNmckHpPpl:1c922838b3974267497b9731aa14af8d994a83eac7c48dad42614ee48249fdc8";
   const langflowClient = new LangflowClient(
     "https://api.langflow.astra.datastax.com",
     applicationToken
