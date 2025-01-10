@@ -44,7 +44,8 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.options("*", cors());
 // Application token and Langflow details
 const applicationToken =
-  "AstraCS:eRIbAZUzOhvlDLZlFonaZPav:6363a7849b38dd1d229e9390cc6e7c28377bb23609ab32bc42660a6da4e9d7d2"; // Add your application token here
+  "AstraCS:kXzZWKBZulxIEMxNmckHpPpl:1c922838b3974267497b9731aa14af8d994a83eac7c48dad42614ee48249fdc8";
+
 const langflowClient = new LangflowClient(
   "https://api.langflow.astra.datastax.com",
   applicationToken
